@@ -15,6 +15,12 @@ public class PingPong {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(PingPong.class);
 
+  private final int max;
+
+  public PingPong(final int max) {
+    this.max = max;
+  }
+
   static record Ping(Address<TPong> sender) {
 
   }
@@ -40,7 +46,7 @@ public class PingPong {
 
   private Effect<Ping> pongerBehavior(final Address<Ping> self, final Ping msg, final int counter) {
     return switch (msg) {
-      case Ping p && counter < 10 -> {
+      case Ping p && counter < this.max -> {
         LOGGER.info("ping! ➡️");
         p.sender().tell(new Pong(self));
         yield Become(m -> this.pongerBehavior(self, m, counter + 1));

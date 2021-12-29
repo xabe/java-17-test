@@ -6,7 +6,7 @@ public class PingPongTest {
 
   @Test
   public void pingPong() throws Exception {
-    final PingPong pingPong = new PingPong();
+    final PingPong pingPong = new PingPong(5);
 
     pingPong.call();
   }
